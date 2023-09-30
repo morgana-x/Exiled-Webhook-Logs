@@ -48,10 +48,9 @@ namespace SCPDiscordWebhookModerationBasic
 
         public bool Debug { get; set; } = false;
 
-        public string webhookGeneral { get; set; }// = "https://discord.com/api/webhooks/1126847170008600646/9Ik2FhT926BmkUqcxOLRMsHuCR0VJVdrDHy_1BlV_mGn84bqjXmLAqmQlVB4yWIb7Y-J";
-        public string webhookTeamkill { get; set; }// = "https://discord.com/api/webhooks/1147405521696071750/fKADv7RCOwqjIS_gLdu96F6FJ-RK18kaRj1PfI9YW_LJZ3d3pfgbZrGD5_gPu7bDD06I";
-        public string webhookModeration { get; set; }// = "https://discord.com/api/webhooks/1126849478327029851/QpxilMoA7LoH0AvHwsjB2hcQ6kf0wtPCHHGRFqFcptXimF0u_lgVmAxGxFUZ8R1xyauM";
-
+        public string webhookGeneral { get; set; }
+        public string webhookTeamkill { get; set; }
+        public string webhookModeration { get; set; }
         public Translations translations { get; set; } = new Translations();
     }
 
