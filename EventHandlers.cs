@@ -60,6 +60,8 @@ namespace SCPDiscordWebhookModerationBasic
         }
         public void OnKicked(KickedEventArgs ev)
         {
+            if (ev.Player.IsNPC)
+                return;
             string translated = Plugin.Instance.Config.translations.player.Kicked;
             translated = translated.Replace("{player}", formatPlayer(ev.Player));
             translated = translated.Replace("{reason}", ev.Reason);
@@ -91,9 +93,12 @@ namespace SCPDiscordWebhookModerationBasic
         public void OnBanned(BannedEventArgs ev)
         {
             string translated = Plugin.Instance.Config.translations.player.Banned;
-            translated = translated.Replace("{player}", formatPlayer(ev.Target));
-            translated = translated.Replace("{admin}", formatPlayer(ev.Player));
-            translated = translated.Replace("{type}", ev.Type.ToString());
+            if (ev.Target != null)
+                translated = translated.Replace("{player}", formatPlayer(ev.Target));
+            if (ev.Player != null)
+                translated = translated.Replace("{admin}", formatPlayer(ev.Player));
+            if (ev.Type != null)
+                translated = translated.Replace("{type}", ev.Type.ToString());
             Plugin.Instance.SendWebHookBasic(Plugin.Instance.Config.webhookModeration, translated);
         }
         public void OnChangingRole(ChangingRoleEventArgs ev)
@@ -116,9 +121,12 @@ namespace SCPDiscordWebhookModerationBasic
             if (ev.Attacker != null && ev.Attacker != ev.Player)
             {
                 string translatedteamkill = Plugin.Instance.Config.translations.player.Killed;
-                translatedteamkill = translatedteamkill.Replace("{victim}", formatPlayer(ev.Player));
-                translatedteamkill = translatedteamkill.Replace("{attacker}", formatPlayer(ev.Attacker));
-                translatedteamkill = translatedteamkill.Replace("{damagetype}", ev.DamageHandler.Type.ToString());
+                if (ev.Player != null)
+                    translatedteamkill = translatedteamkill.Replace("{victim}", formatPlayer(ev.Player));
+                if (ev.Attacker != null)
+                    translatedteamkill = translatedteamkill.Replace("{attacker}", formatPlayer(ev.Attacker));
+                if (ev.DamageHandler.Type != null)
+                    translatedteamkill = translatedteamkill.Replace("{damagetype}", ev.DamageHandler.Type.ToString());
                 
                 Plugin.Instance.SendWebHookBasic(Plugin.Instance.Config.webhookGeneral, translatedteamkill);
                 if (ev.Attacker.Role.Side == ev.Player.Role.Side)
@@ -129,7 +137,6 @@ namespace SCPDiscordWebhookModerationBasic
             }
             string translated = Plugin.Instance.Config.translations.player.Died;
             translated = translated.Replace("{victim}", formatPlayer(ev.Player));
-            translated = translated.Replace("{attacker}", formatPlayer(ev.Attacker));
             translated = translated.Replace("{damagetype}", ev.DamageHandler.Type.ToString());
             Plugin.Instance.SendWebHookBasic(Plugin.Instance.Config.webhookGeneral, translated);
         }
@@ -146,7 +153,24 @@ namespace SCPDiscordWebhookModerationBasic
             translated = translated.Replace("{roundtime}", Round.ElapsedTime.TotalMinutes.ToString() + " minutes");
             Plugin.Instance.SendWebHookBasic(Plugin.Instance.Config.webhookGeneral, translated);
         }
-
+        public void IssuingMute(IssuingMuteEventArgs ev)
+        {
+            if (ev.Player == null)
+                return;
+            string translated = Plugin.Instance.Config.translations.player.IssuingMute;
+            translated = translated.Replace("{player}", formatPlayer(ev.Player));
+            Plugin.Instance.SendWebHookBasic(Plugin.Instance.Config.webhookModeration, translated);
+        
+        }
+        public void RevokingMute(RevokingMuteEventArgs ev)
+        {
+            if (ev.Player == null)
+                return;
+            string translated = Plugin.Instance.Config.translations.player.RevokeMute;
+            translated = translated.Replace("{player}", formatPlayer(ev.Player));
+            
+            Plugin.Instance.SendWebHookBasic(Plugin.Instance.Config.webhookModeration, translated);
+        }
         public void OnWarheadDetonated()
         {
             Plugin.Instance.SendWebHookBasic(Plugin.Instance.Config.webhookGeneral, Plugin.Instance.Config.translations.server.WarheadDetonated);

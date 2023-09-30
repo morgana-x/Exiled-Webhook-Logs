@@ -58,6 +58,8 @@ namespace SCPDiscordWebhookModerationBasic
             Exiled.Events.Handlers.Player.Handcuffing += _handlers.OnHandcuffing;
             Exiled.Events.Handlers.Player.RemovingHandcuffs += _handlers.OnRemovingHandcuffs;
             Exiled.Events.Handlers.Map.Decontaminating += _handlers.Decontaminating;
+            Exiled.Events.Handlers.Player.IssuingMute += _handlers.IssuingMute;
+            Exiled.Events.Handlers.Player.RevokingMute += _handlers.RevokingMute;
            
         }
 
@@ -81,6 +83,8 @@ namespace SCPDiscordWebhookModerationBasic
             Exiled.Events.Handlers.Player.Handcuffing -= _handlers.OnHandcuffing;
             Exiled.Events.Handlers.Player.RemovingHandcuffs -= _handlers.OnRemovingHandcuffs;
             Exiled.Events.Handlers.Map.Decontaminating -= _handlers.Decontaminating;
+            Exiled.Events.Handlers.Player.IssuingMute -= _handlers.IssuingMute;
+            Exiled.Events.Handlers.Player.RevokingMute -= _handlers.RevokingMute;
             _handlers = null;
         }
         private readonly HttpClient httpClient = new HttpClient();

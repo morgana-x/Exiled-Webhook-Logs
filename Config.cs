@@ -20,6 +20,9 @@ namespace SCPDiscordWebhookModerationBasic
         public string RemovedHandcuffs { get; set; } = "{attacker} removed {victim}'s handcuffs";
 
         public string Revived { get; set; } = "{player} was revived as a zombie by {doctor}!";
+
+        public string IssuingMute { get; set; } = "{player} was muted.";
+        public string RevokeMute { get; set; } = " {player}'s mute was revoked.";
     }
     public class TranslationsServer
     {
